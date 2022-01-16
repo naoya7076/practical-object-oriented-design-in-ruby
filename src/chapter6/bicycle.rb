@@ -16,7 +16,7 @@ class Bicycle
     {
       tire_size: tire_size,
       chain: chain
-    }
+    }.merge(local_spares)
   end
 
   def default_chain
@@ -25,6 +25,10 @@ class Bicycle
 
   def default_tire_size
     raise NotImplementedError
+  end
+
+  def local_spares
+    {}
   end
 end
 
@@ -39,8 +43,8 @@ class RoadBike < Bicycle
     '23'
   end
 
-  def spares
-    super.merge({ tape_color: tape_color })
+  def local_spares
+    { tape_color: tape_color }
   end
 end
 
