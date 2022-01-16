@@ -1,14 +1,14 @@
 class Bicycle
   attr_reader :size, :chain, :tire_size
-  def initialize(chain: default_chain, tire_size: default_tire_size, **args)
+  def initialize(args={})
     @size = args[:size]
-    @chain = chain
-    @tire_size = tire_size
+    @chain = args[:chain] || default_chain
+    @tire_size = args[:tire_size] || default_tire_size
 
-    post_initialize(size, chain, tire_size)
+    post_initialize(args)
   end
 
-  def post_initialize(**args)
+  def post_initialize(args)
     nil
   end
 
@@ -31,8 +31,8 @@ end
 class RoadBike < Bicycle
   attr_reader :tape_color
 
-  def post_initialize(tape_color)
-    @tape_color = tape_color
+  def post_initialize(args)
+    @tape_color = args[:tape_color]
   end
 
   def default_tire_size
@@ -75,12 +75,3 @@ class RecumbentBike < Bicycle
     super.merge({flag: flag})
   end
 end
-
-
-pp 'Road Bike'
-road_bike = RoadBike.new(
-  size: 'M',
-  tape_color: 'red'
-)
-pp road_bike.tire_size
-pp road_bike.chain
